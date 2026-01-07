@@ -438,8 +438,37 @@ HighlightController::HighlightController(Settings &settings,
         accounts->twitch.currentUserChanged.connect([this, &settings] {
             qCDebug(chatterinoHighlights)
                 << "Rebuild checks because user swapped accounts";
+
+            // Disconnect previous username listener and re-register on new current user
+            this->usernameConnection_.disconnect();
+
+            auto currentUser = getApp()->getAccounts()->twitch.getCurrent();
+            if (currentUser)
+            {
+                this->usernameConnection_ = currentUser->userNameChanged.connect(
+                    [this, &settings] {
+                        qCDebug(chatterinoHighlights)
+                            << "Rebuild checks because username changed";
+                        this->rebuildChecks(settings);
+                    });
+            }
+
             this->rebuildChecks(settings);
         }));
+
+    // Register username listener for initial current user
+    {
+        auto currentUser = getApp()->getAccounts()->twitch.getCurrent();
+        if (currentUser)
+        {
+            this->usernameConnection_ = currentUser->userNameChanged.connect(
+                [this, &settings] {
+                    qCDebug(chatterinoHighlights)
+                        << "Rebuild checks because username changed";
+                    this->rebuildChecks(settings);
+                });
+        }
+    }
 
     this->rebuildChecks(settings);
 }

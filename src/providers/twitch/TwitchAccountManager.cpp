@@ -420,6 +420,14 @@ TwitchAccountManager::AddUserResponse TwitchAccountManager::addUser(
             userUpdated = true;
         }
 
+        if (previousUser->getUserName().compare(userData.username, Qt::CaseInsensitive) != 0)
+        {
+            if (previousUser->setUserName(userData.username))
+            {
+                userUpdated = true;
+            }
+        }
+
         if (userUpdated)
         {
             return AddUserResponse::UserValuesUpdated;

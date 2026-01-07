@@ -65,6 +65,11 @@ public:
     // Returns true if the value has changed, otherwise false
     bool setOAuthToken(const QString &newOAuthToken);
 
+    // Attempts to update the users username
+    // Returns true if the value has changed, otherwise false
+    // Emits userNameChanged signal if the username actually changed
+    bool setUserName(const QString &newUserName);
+
     bool isAnon() const;
 
     void loadBlocks();
@@ -111,6 +116,9 @@ public:
     /// Once emotes are reloaded, TwitchAccountManager::emotesReloaded is
     /// invoked with @a caller and an optional error.
     void reloadEmotes(void *caller = nullptr);
+
+    // Signal emitted when the user's username changes
+    boost::signals2::signal<void()> userNameChanged;
 
 private:
     QString oauthClient_;
