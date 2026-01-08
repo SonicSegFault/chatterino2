@@ -117,9 +117,6 @@ public:
     /// invoked with @a caller and an optional error.
     void reloadEmotes(void *caller = nullptr);
 
-    // Signal emitted when the user's username changes
-    boost::signals2::signal<void()> userNameChanged;
-
 private:
     QString oauthClient_;
     QString oauthToken_;

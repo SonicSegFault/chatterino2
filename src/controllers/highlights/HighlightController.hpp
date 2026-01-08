@@ -54,7 +54,6 @@ private:
     pajlada::SettingListener rebuildListener_;
     pajlada::Signals::SignalHolder signalHolder_;
     std::vector<boost::signals2::scoped_connection> bConnections;
-    boost::signals2::scoped_connection usernameConnection_;
 };
 
 }  // namespace chatterino

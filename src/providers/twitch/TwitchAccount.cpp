@@ -201,7 +201,6 @@ bool TwitchAccount::setUserName(const QString &newUserName)
         return false;
     }
     this->userName_ = newUserName;
-    this->userNameChanged();
     return true;
 }
 
